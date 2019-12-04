@@ -76,4 +76,12 @@ app.use(function(err, req, res, next) {
   res.render('layouts/error');
 });
 
+//localhost listener
+app.listen("3000", "127.0.0.1", function () {
+    console.log("Express Server is Running...");
+});
+//heroku listener
+// app.listen(process.env.PORT, process.env.IP, function () {
+//     console.log("Running Express Server...");
+// });
 module.exports = app;

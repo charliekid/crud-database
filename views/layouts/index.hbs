@@ -18,14 +18,14 @@
 		<tbody>
 		{{#each author}}
 		<tr>
-			<th scope="row">{{author.authorId}}</th>
-			<td>{{author.firstName}}</td>
-			<td>{{author.lastName}}</td>
-			<td>{{author.dob }}</td>
-			<td>{{author.dod }}</td>
+			<th scope="row">{{authorId}}</th>
+			<td>{{firstName}}</td>
+			<td>{{lastName}}</td>
+			<td>{{dob}}</td>
+			<td>{{dod}}</td>
 			<td>
-				<a href="/edit/{{author.authorId}} target="_blank" rel="noopener" class="btn btn-sm btn-success">Edit</a>
-				<a href="/delete/{{author.authorId}}" class="btn btn-sm btn-danger">Delete</a>
+				<a href="/edit/{{authorId}}" rel="noopener" class="btn btn-sm btn-success">Edit</a>
+				<a href="/delete/{{authorId}}" class="btn btn-sm btn-danger">Delete</a>
 			</td>
 		</tr>
 		{{/each}}

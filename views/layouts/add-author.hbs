@@ -1,0 +1,60 @@
+{{> header }}
+
+		<div class="container">
+			<form action="/add" method="post">
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<label for="first-name">First Name</label>
+						<input type="text" class="form-control" name="first_name" id="first-name" placeholder="First Name" required>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="last-name">Last Name</label>
+						<input type="text" class="form-control" name="last_name" id="last-name" placeholder="Last Name" required>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<label for="datepickerDOB">Date Of Birth</label>
+						<input id="datepickerDOB" name="date_picker_DOB" data-date-format="yyyy-mm-dd" width="276" />
+					</div>
+				</div>
+				<br>
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<label for="datepickerDOD">Date of Death</label>
+						<input id="datepickerDOD" name="date_picker_DOD" data-date-format="yyyy-mm-dd" width="276" />
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="gender">Gender</label>
+						<select id="gender" name="gender" class="form-control" required>
+							<option selected disabled>Choose gender</option>
+							<option>Female</option>
+							<option>Male</option>
+							<option>Non-Binary</option>
+							<option>Other</option>
+
+						</select>
+					</div>
+				</div>
+				<div class="form-row">
+					<button type="submit" class="btn btn-primary float-right">Add Author</button>
+					<a href="/" class="btn btn-secondary float-right">Cancel</a>
+				</div>
+			</form>
+
+		</div>
+		<script>
+			$('#datepickerDOB').datepicker({
+				uiLibrary: 'bootstrap4'
+				//format: 'yyyy-mm-dd'
+			});
+			$('#datepickerDOD').datepicker({
+				uiLibrary: 'bootstrap4'
+				//format: 'yyyy-mm-dd'
+			});
+		</script>
+	</body>
+</html>

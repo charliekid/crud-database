@@ -1,0 +1,89 @@
+{{> header }}
+		<div class="container">
+		{{#author}}
+
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<label for="first-name">First Name</label>
+						<input type="text" class="form-control" name="first_name" id="first-name" value="{{firstName}}" required>
+					</div>
+					<div class="form-group col-md-4">
+						<label for="last-name">Last Name</label>
+						<input type="text" class="form-control" name="last_name" id="last-name" value="{{lastName}}" placeholder="Last Name" required>
+					</div>
+				</div>
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<label for="datepickerDOB">Date Of Birth</label>
+						<input id="datepickerDOB" name="date_picker_DOB" data-date-format="yyyy-mm-dd" value="{{dob}}" width="276" />
+					</div>
+				</div>
+				<br>
+				<div class="form-row">
+					<div class="form-group col-md-4">
+						<label for="datepickerDOD">Date of Death</label>
+						<input id="datepickerDOD" name="date_picker_DOD" data-date-format="yyyy-mm-dd" value="{{dod}}" width="276" />
+					</div>
+				</div>
+
+				<div class="form-row">
+					<div class="form-group col-md-6">
+						<label for="gender">Gender</label>
+						<select id="gender" name="gender" class="form-control" required>
+							<option selected disabled>{{sex}}</option>
+							<option>Female</option>
+							<option>Male</option>
+							<option>Non-Binary</option>
+							<option>Other</option>
+
+						</select>
+					</div>
+				</div>
+				<div class="form-row">
+					<!--                <button type="submit" class="btn btn-primary float-right">Add Author</button>-->
+					<!--                <a href="/" class="btn btn-secondary float-right">Cancel</a>-->
+
+					<button id="updateAuthorButton" class="btn btn-success float-right">Update Author</button>
+					<a href="/" class="btn btn-secondary">Cancel</a>
+				</div>
+
+
+
+		</div>
+		<script>
+			$(document).ready(function () {
+				$('#datepickerDOB').datepicker({
+					uiLibrary: 'bootstrap4'
+					//format: 'yyyy-mm-dd'
+				});
+				$('#datepickerDOD').datepicker({
+					uiLibrary: 'bootstrap4'
+					//format: 'yyyy-mm-dd'
+				});
+
+				$("#updateAuthorButton").on("click", function(event) {
+
+
+					$.ajax({
+						method: 'POST',
+						url: '/edit/{{authorId}}',
+						//contentType: 'application/json',
+						dataType: 'json',
+						data: {
+							firstName: $('#first-name').val(),
+							lastName: $('#last-name').val(),
+							dob: $('#datepickerDOB').val(),
+							dod: $('#datepickerDOD').val(),
+							sex: $('#gender').val()
+						},
+						success: function (result, status) {
+							console.log("success");
+						}
+					});//ajax
+				 });
+			}); // end of document ready
+
+		</script>
+		{{/author}}
+	</body>
+</html>

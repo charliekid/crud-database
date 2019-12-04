@@ -1,0 +1,21 @@
+{{> header }}
+		{{#author}}
+		<form action="/delete/{{authorId}}" method="post">
+			<table class="table table-borderless">
+				<tbody>
+				<tr>
+					<td>Are you sure you want to delete {{firstName}}</td>
+				</tr>
+				<tr>
+					<td>
+						<button type="submit" class="btn btn-danger float-right">Delete</button>
+						<a href="/" class="btn btn-secondary float-right">Cancel</a>
+					</td>
+				</tr>
+				</tbody>
+			</table>
+		</form>
+		{{/author}}
+
+	</body>
+</html>
