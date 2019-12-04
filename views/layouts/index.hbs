@@ -1,0 +1,40 @@
+
+{{> header }}
+
+<div class="table-wrapper">
+
+	<table class="table table-hovered">
+		<thead class="thead-dark">
+		<tr>
+			<th scope="col">ID</th>
+			<th scope="col">First Name</th>
+			<th scope="col">Last Name</th>
+			<th scope="col">DOB</th>
+			<th scope="col">DOD</th>
+			<th scope="col"></th>
+			<th scope="col"></th>
+		</tr>
+		</thead>
+		<tbody>
+		{{#each author}}
+		<tr>
+			<th scope="row">{{author.authorId}}</th>
+			<td>{{author.firstName}}</td>
+			<td>{{author.lastName}}</td>
+			<td>{{author.dob }}</td>
+			<td>{{author.dod }}</td>
+			<td>
+				<a href="/edit/{{author.authorId}} target="_blank" rel="noopener" class="btn btn-sm btn-success">Edit</a>
+				<a href="/delete/{{author.authorId}}" class="btn btn-sm btn-danger">Delete</a>
+			</td>
+		</tr>
+		{{/each}}
+		</tbody>
+	</table>
+
+<!--	<p class="text-center">No author found. Go <a href="/add" >here</a> to add authors.</p>-->
+
+</div>
+
+</body>
+</html>
