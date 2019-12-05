@@ -1,0 +1,100 @@
+{{> login-header }}
+		<div class="wrapper fadeInDown">
+			<div id="formContent">
+				<!-- Tabs Titles -->
+
+				<!-- Icon -->
+<!--				<div class="fadeIn first">-->
+<!--					<img src="http://danielzawadzki.com/codepen/01/icon.svg" id="icon" alt="User Icon" />-->
+<!--				</div>-->
+
+				<!-- Login Form -->
+				<form>
+					<input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
+					<input type="text" id="password" class="fadeIn third" name="login" placeholder="password">
+					<button id="loginButton" class="btn btn-primary fadeIn fourth m-2" >Login</button>
+					<div id="message" class="alert alert-danger hidden m-2" role="alert">
+						This is a danger alert—check it out!
+					</div>
+				</form>
+
+				<!-- Remind Passowrd -->
+				<div id="formFooter">
+					<a class="underlineHover" href="#">Forgot Password?</a>
+				</div>
+
+			</div>
+		</div>
+		<script>
+			$(document).ready(function() {
+
+				 $('#message').hide();
+				$('#loginButton').on('click', function(e) {
+					// Do not submit until I am ready
+					e.preventDefault();
+					$.ajax({
+						type: "POST",
+						url: "/login",
+						dataType: "json",
+						contentType: "application/json",
+						data: JSON.stringify({
+							"username": $("#login").val(),
+							"password": $("#password").val()
+						}),
+						success: function(result, status) {
+							console.log("got login status back", result);
+							if (result.successful) {
+								// This will navigate to wherever i say...
+								console.log('right before the dashboard call')
+								window.location.href = '/';
+							}
+							else {
+								// Show an error message or something and stay here
+								$('#message').html(result.message);
+								$('#message').show();
+							}
+						},
+						error: function(xhr, status, error) {
+							//err = eval("error: (" + xhr.responseText + ")");
+							//console.error(err);
+							console.log('inside of error of login.hbs   ');
+						},
+						complete: function(data, status) { //optional, used for debugging purposes
+							console.log(status);
+						}
+					});
+				})
+			});
+		</script>
+<!--	<script>-->
+<!--		$('#loginButton').on('click', function(e) {-->
+<!--			e.preventDefault();-->
+
+<!--			$.ajax ({-->
+<!--				type: "POST",-->
+<!--				url: "/auth/login",-->
+<!--				dataType: "json",-->
+<!--				contentType: "application.json",-->
+<!--				data: JSON.stringify({-->
+<!--					"username" : $("#login").val(),-->
+<!--					"password": $("#password").val()-->
+<!--				}),-->
+<!--				success: function(result, status) {-->
+<!--					console.log("got login data back", result);-->
+<!--					if(result.successful) {-->
+<!--					    window.location.href = '/auth/dash'-->
+<!--					} else {-->
+<!--					    // show an error message-->
+<!--					}-->
+<!--				},-->
+<!--				error: function(xhr, status, error) {-->
+<!--				    err = eval("(" + xhr.responseText + ")");-->
+<!--				    console.error(err);-->
+<!--				},-->
+<!--				complete: function(data, status) {-->
+<!--				    console.log(status);-->
+<!--				}-->
+<!--			});-->
+<!--		})-->
+
+<!--	</script>-->

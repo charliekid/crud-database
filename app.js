@@ -4,6 +4,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const mysql = require('mysql');
+const session = require('express-session');
 
 var indexRouter = require('./routes/index');
 //var usersRouter = require('./routes/users');
@@ -19,6 +20,11 @@ var hbs = require('express-handlebars');
 app.set('views', path.join(__dirname, 'views'));
 app.engine('hbs', hbs({extname : 'hbs', defaultLayout: 'layout', layoutsDir: __dirname+'/views/layouts'}));
 app.set('view engine', 'hbs');
+
+// enable session
+app.use(session({
+    secret: '6wOBwJBStY',
+}))
 
 // create connection to database
 // the mysql.createConnection function takes in a configuration object which contains host, user, password and the database name.

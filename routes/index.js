@@ -1,20 +1,85 @@
 var express = require('express');
 var router = express.Router();
 
+router.get('/login', function(req, res, next) {
+    res.render('layouts/login', {
+        title: 'Login' });
+});
+
+router.post('/login', function(req, res, next) {
+
+    let successful = false;
+    let message = '';
+
+    if (req.body.username === 'admin' && req.body.password === 'password') {
+        successful = true;
+        req.session.username = req.body.username;
+        // req.cookie('jason', 'the great!', { maxAge: 900000, httpOnly: true });
+    }
+    else {
+        // delete the user as punishment!
+        delete req.session.username;
+        message = 'Wrong username or password!'
+    }
+
+    console.log('session username', req.session.username);
+
+    // console.log('res.body', req.body);
+
+    // Return success or failure
+    res.json({
+        successful: successful,
+        message: message
+    });
+});
+
+router.get('/logout', function(req, res, next) {
+
+    if (req.session && req.session.username && req.session.username.length) {
+        delete req.session.username;
+    }
+
+    res.json({
+        successful: true,
+        message: ''
+    });
+
+});
+
 /* GET home page. */
 router.get('/', function(req, res, next) {
-    let query = 'SELECT DISTINCT * FROM l9_author';
 
-    db.query(query, (err, result) => {
-        if(err) {
-            res.render('layouts/error');
-        }
-        console.log();
-        res.render('layouts/index', {
-            title: 'Author List',
-            author: result
+    if (req.session && req.session.username && req.session.username.length) {
+        let query = 'SELECT DISTINCT * FROM l9_author';
+
+        db.query(query, (err, result) => {
+            if(err) {
+                res.render('layouts/error');
+            }
+            console.log();
+            res.render('layouts/index', {
+                title: 'Author List',
+                author: result
+            });
         });
-    });
+    }
+    else {
+        delete req.session.username;
+        res.redirect('/login');
+    }
+
+    // let query = 'SELECT DISTINCT * FROM l9_author';
+    //
+    // db.query(query, (err, result) => {
+    //     if(err) {
+    //         res.render('layouts/error');
+    //     }
+    //     console.log();
+    //     res.render('layouts/index', {
+    //         title: 'Author List',
+    //         author: result
+    //     });
+    // });
 });
 
 router.get('/add', function(req, res, next) {
@@ -89,19 +154,18 @@ router.post('/edit/:id', function(req, res, next) {
     let dod = req.body.dod;
     let gender = req.body.sex;
 
-    //let query = "UPDATE `authors` SET `first_name` = '" + first_name + "', `last_name` = '" + last_name + "', `position` = '" + position + "', `number` = '" + number + "' WHERE `authors`.`id` = '" + authorId + "'";
-   //let query = "UPDATE `l9_author` SET `firstName` ='" + req.body.firstName + "', `lastName` = '" + req.body.lastName  + "', `dob` = '" + req.body.dob + "', `dod` = '" + req.body.dod + "', `sex` = '" + req.body.sex + "' WHERE `authorId` = '" + authorId + "'";
-
     let query = "UPDATE `l9_author` SET `firstName` ='" + req.body.firstName + "', `lastName` = '" + req.body.lastName  + "', `dob` = '" + req.body.dob + "', `dod` = '" + req.body.dod + "', `sex` = '" + req.body.sex + "' WHERE `authorId` = '" + authorId + "'";
 
     console.log('query string: ', query);
 
     db.query(query, (err, result) => {
         if (err) {
+            console.log('inside of error of post/edit/:id')
             return res.status(500).send(err);
         }
-        res.redirect('/');
     });
+    // i'm not sure why this redirect isn't working
+    res.redirect('/');
  });
 
 router.post('/delete/:id', function(req, res, next) {
